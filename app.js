@@ -13,6 +13,8 @@ require('dotenv').config();
 const auth = require('./routes/auth');
 const cars = require('./routes/cars');
 const participation = require('./routes/participation');
+const profile = require('./routes/profile');
+
 
 mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
@@ -24,11 +26,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error(error);
 })
 
-
 const app = express();
-
-
-
 
 app.use(cors({
   credentials: true,
@@ -64,6 +62,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth);
 app.use('/cars', cars);
 app.use('/participation',participation);
+app.use('/profile',profile);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
