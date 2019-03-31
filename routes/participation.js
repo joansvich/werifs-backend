@@ -14,7 +14,7 @@ router.post('/create', (req, res, next) => {
   const { idCar, numParticipations } = req.body;
   const { _id } = req.session.currentUser;
   const newParticipation = new Participation({
-    idUser:_id,
+    idUser: _id,
     idCar,
     numParticipations
   });
@@ -32,6 +32,27 @@ router.post('/delete', (req, res, next) => {
     .then(() => {
       return res.status(204).send();
     })
+});
+
+router.put('/', (req, res, next) => {
+  const { _id, position } = req.body;
+  let arrayPosition = [];
+  Participation.findById(_id)
+    .then((result) => {
+      arrayPosition = result.position
+      arrayPosition.push(position);
+      return Participation.findByIdAndUpdate(_id, { position: arrayPosition }, { new: true })
+        .then((participation) => {
+          res.json(participation);
+          res.status(200);
+        })
+        .catch((err) => {
+          res.json(err);
+          res.status(500);
+        })
+    })
+  
+
 });
 
 module.exports = router;
