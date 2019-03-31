@@ -36,7 +36,22 @@ const carsSchema = new Schema({
     type: String,
     required: true,
     default: './images/sample-car.jpg'
-  }
+  },
+  price1: {
+    type: String,
+    required: true,
+    default: "2"
+  },
+  price5: {
+    type: String,
+    required: true,
+    default: "1.90"
+  },
+  price10: {
+    type: String,
+    required: true,
+    default: "1.80"
+  }  
 });
 
 const Cars = mongoose.model('Cars', carsSchema);

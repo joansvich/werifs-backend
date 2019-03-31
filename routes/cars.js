@@ -11,7 +11,7 @@ router.get('/',  (req, res, next) => {
 });
 
 router.post('/create', (req, res, next) => {
-  const { name, power, retailPrice, velocity, torque, contamination, drivetrain, imageUrl } = req.body;
+  const { name, power, retailPrice, velocity, torque, contamination, drivetrain, imageUrl, price1, price5, price10 } = req.body;
 
   Cars.findOne({
       name
@@ -32,7 +32,10 @@ router.post('/create', (req, res, next) => {
         torque,
         contamination,
         drivetrain, 
-        imageUrl
+        imageUrl,
+        price1,
+        price5,
+        price10
       });
 
       return newCar.save().then(() => {
