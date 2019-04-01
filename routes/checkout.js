@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const stripe = require("stripe")("sk_test_cVixdDOqymfQhjyDEMVFeKQg00zpmzUPXB");
+const { isLoggedIn, isNotLoggedIn, validationLoggin } = require('../helpers/middlewares');
 
-
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedIn, async (req, res, next) => {
   const {amount, token} = req.body;
   const charge = await stripe.charges.create({
     amount,
