@@ -4,7 +4,9 @@ const router = express.Router();
 const Participation = require('../models/Participation');
 
 router.get('/', (req, res, next) => {
-  Participation.find().populate('idCar')
+  const { _id } = req.session.currentUser;
+
+  Participation.find({ idUser: _id }).populate('idCar')
     .then((participation) => {
       return res.json(participation);
     })
@@ -13,6 +15,7 @@ router.get('/', (req, res, next) => {
 router.post('/create', (req, res, next) => {
   const { idCar, numParticipations } = req.body;
   const { _id } = req.session.currentUser;
+  console.log(_id);
   const newParticipation = new Participation({
     idUser: _id,
     idCar,
@@ -51,7 +54,7 @@ router.put('/', (req, res, next) => {
           res.status(500);
         })
     })
-  
+
 
 });
 
