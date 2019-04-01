@@ -14,6 +14,8 @@ const auth = require('./routes/auth');
 const cars = require('./routes/cars');
 const participation = require('./routes/participation');
 const profile = require('./routes/profile');
+const checkout = require('./routes/checkout');
+
 
 
 mongoose.connect(process.env.MONGODB_URI, {
@@ -61,8 +63,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', auth);
 app.use('/cars', cars);
-app.use('/participation',participation);
-app.use('/profile',profile);
+app.use('/participation', participation);
+app.use('/profile', profile);
+app.use('/checkout', checkout);
 
 
 // catch 404 and forward to error handler
@@ -76,7 +79,7 @@ app.use((err, req, res, next) => {
 
   // only render if the error ocurred before sending the response
   if (!res.headersSent) {
-    const statusError = err.status || '500' 
+    const statusError = err.status || '500'
     res.status(statusError).json(err);
   }
 });

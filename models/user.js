@@ -7,7 +7,11 @@ const userSchema = new Schema({
   adress: String,
   phone: String,
   email: String,
-  imageUrl: String
+  imageUrl: String,
+  admin: {
+    type: Boolean,
+    default: false
+  }
 }, {
   timestamps: {
     createdAt: 'created_at',
