@@ -40,11 +40,23 @@ router.post('/delete', (req, res, next) => {
 router.put('/', (req, res, next) => {
   const { _id, position } = req.body;
   let arrayPosition = [];
-  Participation.findById(_id)
-    .then((result) => {
-      arrayPosition = result.position
+  Participation.findById(_id).populate('idCar')
+    .then((participations) => {
+      arrayPosition = participations.position
       arrayPosition.push(position);
-      return Participation.findByIdAndUpdate(_id, { position: arrayPosition }, { new: true })
+      const { price1, price5, price10 } = participations.idCar;
+      const totalPositions = arrayPosition.length;
+      let totalAmount = 0;
+      if (totalPositions < 5) {
+        totalAmount = price1 * totalPositions;
+
+      } else if (totalPositions < 10) {
+        totalAmount = price5 * totalPositions;
+      } else {
+        totalAmount = price10 * totalPositions;
+      }
+      Math.round(totalAmount * 100);
+      return Participation.findByIdAndUpdate(_id, { position: arrayPosition, amount: totalAmount }, { new: true }).populate('idCar')
         .then((participation) => {
           res.json(participation);
           res.status(200);

@@ -14,7 +14,7 @@ const participationSchema = new Schema({
     type: ObjectId,
     ref: 'Cars'
   },
-  numParticipations: {
+  amount: {
     type: Number,
     default: 0
   },
