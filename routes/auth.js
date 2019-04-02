@@ -17,10 +17,10 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
     })
     .then((user) => {
       if (!user) {
-        const err = new Error('Not Found');
-        err.status = 404;
-        err.statusMessage = 'Not Found';
-        next(err)
+        return res.status(404).json({
+          error:true,
+          code:"El usuario no existe"
+        })
       }
       if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
@@ -47,7 +47,7 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
         err.status = 422;
         err.statusMessage = 'username-not-unique';
         next(err);
-      }
+      }else{
 
       const salt = bcrypt.genSaltSync(10);
       const hashPass = bcrypt.hashSync(password, salt);
@@ -66,6 +66,7 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
         req.session.currentUser = newUser;
         res.status(200).json(newUser);
       });
+    }
     })
     .catch(next);
 });
