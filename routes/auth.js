@@ -13,23 +13,23 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
   const { username, password } = req.body;
 
   User.findOne({
-      username
-    })
+    username
+  })
     .then((user) => {
       if (!user) {
         return res.status(404).json({
-          error:true,
-          code:"El usuario no existe"
+          error: true,
+          code: "El usuario no existe"
         })
       }
       if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
         return res.status(200).json(user);
       } else {
-        const err = new Error('Unauthorized');
-        err.status = 401;
-        err.statusMessage = 'Unauthorized';
-        next(err);
+        return res.status(401).json({
+          error: true,
+          code: "La contraseña no es correcta"
+        })
       }
     })
     .catch(next);
@@ -39,34 +39,34 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
   const { username, password, adress, phone, email, imageUrl } = req.body;
 
   User.findOne({
-      username
-    }, 'username')
+    username
+  }, 'username')
     .then((userExists) => {
       if (userExists) {
-        const err = new Error('Unprocessable Entity');
-        err.status = 422;
-        err.statusMessage = 'username-not-unique';
-        next(err);
-      }else{
+        return res.status(422).json({
+          error: true,
+          code: "Ya existe un usuario con este nombre"
+        })
+      } else {
 
-      const salt = bcrypt.genSaltSync(10);
-      const hashPass = bcrypt.hashSync(password, salt);
+        const salt = bcrypt.genSaltSync(10);
+        const hashPass = bcrypt.hashSync(password, salt);
 
-      const newUser = new User({
-        username,
-        password: hashPass,
-        adress,
-        phone,
-        email,
-        imageUrl
-      });
+        const newUser = new User({
+          username,
+          password: hashPass,
+          adress,
+          phone,
+          email,
+          imageUrl
+        });
 
-      return newUser.save().then(() => {
-        // TODO delete password 
-        req.session.currentUser = newUser;
-        res.status(200).json(newUser);
-      });
-    }
+        return newUser.save().then(() => {
+          // TODO delete password 
+          req.session.currentUser = newUser;
+          res.status(200).json(newUser);
+        });
+      }
     })
     .catch(next);
 });

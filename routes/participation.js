@@ -5,10 +5,9 @@ const Participation = require('../models/Participation');
 
 router.get('/', (req, res, next) => {
   const { _id } = req.session.currentUser;
-
   Participation.find({ idUser: _id }).populate('idCar')
     .then((participation) => {
-      return res.json(participation);
+      return res.status(200).json(participation);
     })
 });
 
