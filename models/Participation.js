@@ -21,7 +21,11 @@ const participationSchema = new Schema({
   position: [{
     type: String,
     default: '0'
-  }]
+  }],
+  paid: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const Participation = mongoose.model('Participation', participationSchema);

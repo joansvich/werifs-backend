@@ -7,7 +7,10 @@ const userSchema = new Schema({
   adress: String,
   phone: String,
   email: String,
-  imageUrl: String,
+  imageUrl: {
+    type: String,
+    default: './images/avatar-default.png'
+  },
   admin: {
     type: Boolean,
     default: false

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const { isLoggedIn } = require('../helpers/middlewares');
 
 
-router.put('/', (req, res, next) => {
+router.put('/', isLoggedIn(), (req, res, next) => {
   const { username, adress, phone, email, imageUrl } = req.body;
   const { _id } = req.session.currentUser;
   let updateUser = {
@@ -20,7 +21,7 @@ router.put('/', (req, res, next) => {
       res.json(user);
       res.status(200);
     })
-    .catch((err)=>{
+    .catch((err) => {
       res.json(err);
       res.status(500);
     })

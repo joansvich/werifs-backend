@@ -5,7 +5,7 @@ const Participation = require('../models/Participation');
 
 router.get('/', (req, res, next) => {
   const { _id } = req.session.currentUser;
-  Participation.find({ idUser: _id }).populate('idCar')
+  Participation.find({ idUser: _id, paid:false }).populate('idCar')
     .then((participation) => {
       return res.status(200).json(participation);
     })
@@ -36,6 +36,7 @@ router.post('/delete', (req, res, next) => {
     })
 });
 
+
 router.put('/', (req, res, next) => {
   const { _id, position } = req.body;
   let arrayPosition = [];
@@ -65,8 +66,6 @@ router.put('/', (req, res, next) => {
           res.status(500);
         })
     })
-
-
 });
 
 module.exports = router;

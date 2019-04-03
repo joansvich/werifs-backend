@@ -2,26 +2,31 @@ const express = require('express');
 const router = express.Router();
 const stripe = require("stripe")("sk_test_cVixdDOqymfQhjyDEMVFeKQg00zpmzUPXB");
 const { isLoggedIn, isNotLoggedIn, validationLoggin } = require('../helpers/middlewares');
-
-
+const Participation = require('../models/Participation');
 
 router.post('/', isLoggedIn(), async (req, res, next) => {
   try {
-    console.log("checkout backend")
-    const { amount, token } = req.body;
+    const { amount, token, listParticipation } = req.body;
     const charge = await stripe.charges.create({
       amount,
       currency: 'eur',
       description: 'Participación por el coche',
       source: token
     });
+    if (charge.status === "succeeded") {
+      listParticipation.map((participation) => {
+        const { _id } = participation
+        Participation.findByIdAndUpdate(_id, { paid: true }, { new: true })
+          .then((part) => console.log(part))
+          .catch((error) => console.log(error))
+      })
+    }
     res.json(charge);
     res.status(200);
-    console.log("checkout done")
+
 
     return charge;
   } catch (error) {
-    console.log("checkout error")
 
     res.json(error);
     res.status(400);

@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const Cars = require('../models/Cars');
+const { isLoggedIn } = require('../helpers/middlewares');
 
-router.get('/',  (req, res, next) => {
+router.get('/', (req, res, next) => {
   Cars.find()
     .then((cars) => {
       return res.json(cars);
     })
 });
 
-router.post('/create', (req, res, next) => {
+router.post('/create', isLoggedIn(), (req, res, next) => {
   const { name, power, retailPrice, velocity, torque, contamination, drivetrain, imageUrl, price1, price5, price10 } = req.body;
 
   Cars.findOne({
