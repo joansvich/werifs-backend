@@ -10,7 +10,8 @@ router.put('/', (req, res, next) => {
     username,
     adress,
     phone,
-    email
+    email,
+    imageUrl
   }
 
   return User.findByIdAndUpdate(_id, updateUser, { new: true })

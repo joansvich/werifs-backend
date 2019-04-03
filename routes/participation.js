@@ -54,7 +54,7 @@ router.put('/', (req, res, next) => {
       } else {
         totalAmount = price10 * totalPositions;
       }
-      const roundAmount = Math.round(totalAmount * 100)/100;
+      const roundAmount = Math.round(totalAmount * 100) / 100;
       return Participation.findByIdAndUpdate(_id, { position: arrayPosition, amount: roundAmount }, { new: true }).populate('idCar')
         .then((participation) => {
           res.json(participation);
