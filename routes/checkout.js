@@ -16,9 +16,12 @@ router.post('/', isLoggedIn(), async (req, res, next) => {
     if (charge.status === "succeeded") {
       listParticipation.map((participation) => {
         const { _id } = participation
-        Participation.findByIdAndUpdate(_id, { paid: true }, { new: true })
-          .then((part) => console.log(part))
-          .catch((error) => console.log(error))
+        if (participation.position.length > 0) {
+          Participation.findByIdAndUpdate(_id, { paid: true }, { new: true })
+            .then((part) => console.log(part))
+            .catch(next)
+        }
+
       })
     }
     res.json(charge);
