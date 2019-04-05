@@ -24,6 +24,7 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
       }
       if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
+        console.log(req.session.currentUser);
         return res.status(200).json(user);
       } else {
         return res.status(401).json({
