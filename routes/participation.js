@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const Participation = require('../models/Participation');
+const { isLoggedIn } = require('../helpers/middlewares');
 
-router.get('/', (req, res, next) => {
+
+router.get('/', isLoggedIn(), (req, res, next) => {
   const { _id } = req.session.currentUser;
   Participation.find({ idUser: _id }).populate('idCar')
     .then((participation) => {
@@ -11,10 +13,9 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.post('/create', (req, res, next) => {
+router.post('/create', isLoggedIn(), (req, res, next) => {
   const { idCar, numParticipations } = req.body;
   const { _id } = req.session.currentUser;
-  console.log(_id);
   const newParticipation = new Participation({
     idUser: _id,
     idCar,
@@ -26,10 +27,8 @@ router.post('/create', (req, res, next) => {
     });
 });
 
-router.post('/delete', (req, res, next) => {
-  console.log('delete');
+router.post('/delete', isLoggedIn(), (req, res, next) => {
   const { _id } = req.body;
-  console.log(Participation.findByIdAndDelete(_id));
   Participation.findByIdAndDelete(_id)
     .then(() => {
       return res.status(204).send();
@@ -37,7 +36,7 @@ router.post('/delete', (req, res, next) => {
 });
 
 
-router.put('/', (req, res, next) => {
+router.put('/', isLoggedIn(), (req, res, next) => {
   const { _id, position } = req.body;
   let arrayPosition = [];
   Participation.findById(_id).populate('idCar')

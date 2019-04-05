@@ -23,9 +23,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE
 }).then(() => {
-  console.log(`Connected to database`);
 }).catch((error) => {
-  console.error(error);
 })
 
 const app = express();
