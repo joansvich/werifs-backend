@@ -6,7 +6,14 @@ const User = require('../models/user');
 const { isLoggedIn, isNotLoggedIn, validationLoggin } = require('../helpers/middlewares');
 
 router.get('/me', isLoggedIn(), (req, res, next) => {
-  res.json(req.session.currentUser);
+  User.findById(req.session.currentUser._id)
+    .then(user => {
+      req.session.currentUser = user
+      res.json(req.session.currentUser);
+    })
+    .catch(err => {
+      res.json(err);
+    })
 });
 
 router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
@@ -24,9 +31,7 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
       }
       if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
-        console.log('Login!');
-        console.log(req.session.currentUser);
-        return res.status(200).json(req.session.currentUser);
+        return res.status(200).json(user);
       } else {
         return res.status(401).json({
           error: true,
