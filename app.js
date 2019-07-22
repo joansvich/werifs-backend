@@ -30,7 +30,7 @@ const app = express();
 
 app.use(cors({
   credentials: true,
-  origin: [process.env.PUBLIC_DOMAIN],
+  origin: [process.env.PUBLIC_DOMAIN, 'https://werifs.herokuapp.com/'],
 }));
 
 
@@ -66,6 +66,12 @@ app.use('/cars', cars);
 app.use('/participation', participation);
 app.use('/profile', profile);
 app.use('/checkout', checkout);
+
+// REACT APP index.html	
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 
 // catch 404 and forward to error handler
