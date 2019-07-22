@@ -1,0 +1,147 @@
+:root {
+  --font: 'Ubuntu', sans-serif;
+}
+
+html {
+  font-family: var(--font);
+}
+
+body {
+  margin: 0;
+}
+
+
+.body {
+  padding-top: 80px;
+  min-height: 63vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.container--wide {
+  width: 90%;
+  /* max-width: 1024px; */
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.link-homepage {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Component Input */
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 300px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.component-input {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  position: relative;
+  justify-content: center;
+}
+
+.component-input--input {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  color: #79808e;
+  border: 1px solid #dcdddf;
+  background: #fcfcfc;
+  padding: 10px 15px 0 15px !important;
+  font-size: 18px;
+  margin: 0 0 20px 0;
+}
+
+.label-component-input {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  color: #bbb;
+  font-size: 10px;
+}
+
+section {
+  text-align: center;
+}
+
+.section-line {
+  border-top: 3px solid #c7c7c7;
+  display: block;
+  height: 1px;
+  position: relative;
+  top: 76px;
+  width: 100%;
+  margin: auto;
+}
+
+.section-text-header {
+  background-color: #FFFFFF;
+  display: inline-block;
+  margin: 60px;
+  padding: 0 15px;
+  color: #555;
+  position: relative;
+}
+
+.container-title{
+  text-align: center;
+}
+
+.title-line {
+  border-top: 3px solid #c7c7c7;
+  display: block;
+  height: 1px;
+  position: relative;
+  top: 50px;
+  width: 78%;
+  margin: auto;
+}
+
+.title-text-header {
+  background-color: #FFFFFF;
+  display: inline-block;
+  margin: 30px;
+  padding: 0 15px;
+  color: #555;
+  font-size: 28px;
+  position: relative;
+}
+
+.relative {
+  position: relative;
+}
