@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700,800,900&display=swap');
+
 :root {
-  --font: 'Ubuntu', sans-serif;
+  --font: 'Nunito', sans-serif;
+  --regular: 400;
+  --bold: 700;
+  --extra-bold: 800;
+  --black: 900;
+  --primary-text-color: #252627;
+  --primary-corporative-color: #3C91F7;
+  --rgba-primary-corporative-color: 60,145,247;
+  --radius: 38px;
 }
 
 html {
@@ -8,6 +18,8 @@ html {
 
 body {
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 
@@ -41,7 +53,7 @@ body {
   text-align: center;
 }
 
-.link-homepage {
+.link {
   text-decoration: none;
   cursor: pointer;
 }

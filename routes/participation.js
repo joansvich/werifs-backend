@@ -13,6 +13,7 @@ router.get('/', isLoggedIn(), (req, res, next) => {
     })
 });
 
+
 router.post('/create', isLoggedIn(), (req, res, next) => {
   const { idCar, numParticipations } = req.body;
   const { _id } = req.session.currentUser;
